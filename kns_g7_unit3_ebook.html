@@ -1,0 +1,1330 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>康軒國中英語七上 Unit 3 互動電子書 • Let's Explore Rooms & Places</title>
+  <style>
+    :root {
+      --primary: #2b6cb0;
+      --primary-light: #ebf4ff;
+      --accent-gold: #d69e2e;
+      --accent-green: #38a169;
+      --accent-coral: #dd6b20;
+      --bg-desk: #f0f4f8;
+      --paper-bg: #fffdfa;
+      --text-main: #2d3748;
+      --text-muted: #718096;
+      --border-color: #e2e8f0;
+      --shadow-book: 0 16px 38px rgba(0,0,0,0.12), 0 4px 12px rgba(0,0,0,0.06);
+      --font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans TC", "Microsoft JhengHei", sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: var(--font-family);
+      background-color: var(--bg-desk);
+      color: var(--text-main);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+
+    /* Top E-Book Navigation & Toolbar */
+    .ebook-topbar {
+      background: #ffffff;
+      border-bottom: 2px solid #cbd5e0;
+      padding: 10px 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .book-meta {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .book-badge {
+      background: #2b6cb0;
+      color: #fff;
+      font-size: 0.8rem;
+      font-weight: 700;
+      padding: 4px 10px;
+      border-radius: 6px;
+      letter-spacing: 0.05em;
+    }
+
+    .book-title {
+      font-size: 1.15rem;
+      font-weight: 800;
+      color: #1a202c;
+    }
+
+    .toolbar-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .tool-group {
+      display: flex;
+      align-items: center;
+      background: #edf2f7;
+      padding: 4px 8px;
+      border-radius: 20px;
+      gap: 6px;
+    }
+
+    .tool-btn {
+      background: transparent;
+      border: none;
+      padding: 6px 12px;
+      border-radius: 16px;
+      font-size: 0.86rem;
+      font-weight: 600;
+      color: #4a5568;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s;
+    }
+
+    .tool-btn:hover {
+      background: #e2e8f0;
+      color: #2b6cb0;
+    }
+
+    .tool-btn.active {
+      background: #2b6cb0;
+      color: #ffffff;
+      box-shadow: 0 2px 6px rgba(43, 108, 176, 0.3);
+    }
+
+    .color-dot {
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      display: inline-block;
+      cursor: pointer;
+      border: 2px solid transparent;
+      transition: transform 0.2s;
+    }
+
+    .color-dot:hover, .color-dot.active {
+      transform: scale(1.2);
+      border-color: #2d3748;
+    }
+
+    /* Chapter Tabs Navigation */
+    .chapter-nav {
+      background: #ebf4ff;
+      border-bottom: 1px solid #cbd5e0;
+      padding: 0 24px;
+      display: flex;
+      gap: 4px;
+      overflow-x: auto;
+    }
+
+    .chapter-tab {
+      padding: 12px 20px;
+      font-size: 0.92rem;
+      font-weight: 700;
+      color: #4a5568;
+      background: transparent;
+      border: none;
+      border-bottom: 3px solid transparent;
+      cursor: pointer;
+      white-space: nowrap;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.2s;
+    }
+
+    .chapter-tab:hover {
+      color: #2b6cb0;
+      background: rgba(255,255,255,0.6);
+    }
+
+    .chapter-tab.active {
+      color: #2b6cb0;
+      background: var(--paper-bg);
+      border-bottom-color: #2b6cb0;
+      border-radius: 8px 8px 0 0;
+    }
+
+    /* Main Book Layout */
+    .book-container {
+      flex: 1;
+      max-width: 1200px;
+      width: 100%;
+      margin: 24px auto;
+      padding: 0 16px;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+    }
+
+    .book-page {
+      background: var(--paper-bg);
+      border-radius: 12px;
+      box-shadow: var(--shadow-book);
+      border: 1px solid #e2e8f0;
+      padding: 40px 48px;
+      min-height: 680px;
+      position: relative;
+      background-image: linear-gradient(#f7fafc 1px, transparent 1px);
+      background-size: 100% 32px;
+    }
+
+    @media (max-width: 768px) {
+      .book-page {
+        padding: 24px 20px;
+      }
+    }
+
+    .page-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      border-bottom: 2px solid #2b6cb0;
+      padding-bottom: 12px;
+      margin-bottom: 28px;
+    }
+
+    .unit-tag {
+      font-size: 0.85rem;
+      font-weight: 800;
+      color: #2b6cb0;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .page-title {
+      font-size: 1.8rem;
+      font-weight: 900;
+      color: #1a202c;
+    }
+
+    .page-num {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: #a0aec0;
+    }
+
+    /* Highlighter Styling */
+    .hl-yellow { background-color: rgba(254, 240, 138, 0.65); border-radius: 2px; }
+    .hl-green  { background-color: rgba(187, 247, 208, 0.65); border-radius: 2px; }
+    .hl-pink   { background-color: rgba(251, 207, 232, 0.65); border-radius: 2px; }
+    .hl-blue   { background-color: rgba(191, 219, 254, 0.65); border-radius: 2px; }
+
+    /* Interactive Clickable Words */
+    .vocab-term {
+      font-weight: 700;
+      color: #2b6cb0;
+      cursor: pointer;
+      border-bottom: 2px dashed #90cdf4;
+      transition: all 0.2s;
+      position: relative;
+    }
+
+    .vocab-term:hover {
+      background: #ebf8ff;
+      color: #1a365d;
+      border-bottom-style: solid;
+    }
+
+    .grammar-pill {
+      background: #fefcbf;
+      color: #744210;
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-weight: 700;
+      cursor: pointer;
+      border: 1px solid #f6e05e;
+    }
+
+    /* Dialogue Section */
+    .dialogue-wrapper {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .dialogue-bubble {
+      display: flex;
+      gap: 16px;
+      align-items: flex-start;
+    }
+
+    .speaker-avatar {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: #2b6cb0;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      font-size: 1.1rem;
+      flex-shrink: 0;
+      box-shadow: 0 4px 8px rgba(43, 108, 176, 0.25);
+    }
+
+    .speaker-avatar.nick { background: #319795; }
+    .speaker-avatar.bella { background: #d53f8c; }
+    .speaker-avatar.scott { background: #dd6b20; }
+
+    .bubble-content {
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-radius: 12px;
+      padding: 14px 20px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+      flex: 1;
+      position: relative;
+    }
+
+    .bubble-speaker {
+      font-size: 0.82rem;
+      font-weight: 800;
+      color: #718096;
+      margin-bottom: 4px;
+    }
+
+    .bubble-en {
+      font-size: 1.12rem;
+      font-weight: 600;
+      color: #2d3748;
+      margin-bottom: 4px;
+    }
+
+    .bubble-zh {
+      font-size: 0.92rem;
+      color: #718096;
+      display: none;
+    }
+
+    .bubble-zh.show {
+      display: block;
+    }
+
+    /* Reading Article */
+    .reading-card {
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-radius: 12px;
+      padding: 28px 32px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.04);
+      margin-bottom: 24px;
+    }
+
+    .reading-para {
+      font-size: 1.12rem;
+      line-height: 2;
+      margin-bottom: 18px;
+      color: #2d3748;
+    }
+
+    .reading-trans {
+      font-size: 0.95rem;
+      color: #4a5568;
+      background: #f7fafc;
+      padding: 12px 16px;
+      border-left: 4px solid #2b6cb0;
+      border-radius: 0 8px 8px 0;
+      margin-bottom: 16px;
+      display: none;
+    }
+
+    .reading-trans.show {
+      display: block;
+    }
+
+    /* Vocabulary Grid */
+    .vocab-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 16px;
+    }
+
+    .vocab-card {
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-radius: 10px;
+      padding: 16px 20px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.04);
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .vocab-card:hover {
+      border-color: #2b6cb0;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 14px rgba(43, 108, 176, 0.12);
+    }
+
+    .vocab-word {
+      font-size: 1.2rem;
+      font-weight: 800;
+      color: #2b6cb0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .vocab-kk {
+      font-size: 0.85rem;
+      color: #718096;
+      font-weight: normal;
+    }
+
+    .vocab-def {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: #2d3748;
+      margin: 4px 0;
+    }
+
+    .vocab-ex {
+      font-size: 0.85rem;
+      color: #4a5568;
+      font-style: italic;
+      margin-top: 6px;
+    }
+
+    /* Preposition Visualizer Mini-Game */
+    .visualizer-section {
+      background: #ffffff;
+      border: 2px solid #bee3f8;
+      border-radius: 14px;
+      padding: 24px;
+      margin-bottom: 28px;
+    }
+
+    .room-canvas {
+      position: relative;
+      height: 260px;
+      background: linear-gradient(180deg, #edf2f7 0%, #e2e8f0 70%, #cbd5e0 100%);
+      border-radius: 10px;
+      border: 2px dashed #a0aec0;
+      overflow: hidden;
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .room-furniture {
+      position: absolute;
+      width: 140px;
+      height: 80px;
+      background: #d69e2e;
+      border-radius: 8px;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      box-shadow: 0 8px 16px rgba(0,0,0,0.15);
+    }
+
+    .room-target-obj {
+      position: absolute;
+      padding: 8px 14px;
+      background: #e53e3e;
+      color: #fff;
+      border-radius: 20px;
+      font-weight: 800;
+      font-size: 0.9rem;
+      box-shadow: 0 4px 10px rgba(229, 62, 62, 0.4);
+      transition: all 0.4s cubic-bezier(0.18, 0.89, 0.32, 1.28);
+    }
+
+    .prep-buttons {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .prep-btn {
+      padding: 8px 16px;
+      border-radius: 20px;
+      border: 1px solid #cbd5e0;
+      background: #fff;
+      font-weight: 700;
+      color: #2b6cb0;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .prep-btn:hover, .prep-btn.active {
+      background: #2b6cb0;
+      color: #fff;
+      border-color: #2b6cb0;
+    }
+
+    .sentence-display {
+      text-align: center;
+      font-size: 1.2rem;
+      font-weight: 800;
+      color: #2c5282;
+      margin-top: 14px;
+      padding: 10px;
+      background: #ebf8ff;
+      border-radius: 8px;
+    }
+
+    /* Sticky Note Widget */
+    .sticky-note {
+      position: absolute;
+      width: 220px;
+      min-height: 140px;
+      background: #fef08a;
+      border: 1px solid #facc15;
+      border-radius: 8px;
+      padding: 12px;
+      box-shadow: 0 10px 20px rgba(0,0,0,0.12);
+      z-index: 50;
+      cursor: move;
+    }
+
+    .sticky-note-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px dashed #ca8a04;
+      padding-bottom: 4px;
+      margin-bottom: 8px;
+      font-size: 0.78rem;
+      font-weight: 800;
+      color: #854d0e;
+    }
+
+    .sticky-note textarea {
+      width: 100%;
+      height: 80px;
+      border: none;
+      background: transparent;
+      resize: none;
+      font-family: inherit;
+      font-size: 0.88rem;
+      color: #713f12;
+      outline: none;
+    }
+
+    .sticky-close {
+      cursor: pointer;
+      color: #854d0e;
+      font-weight: bold;
+    }
+
+    /* Notebook Drawer Modal */
+    .notebook-drawer {
+      position: fixed;
+      top: 0;
+      right: -420px;
+      width: 400px;
+      height: 100vh;
+      background: #ffffff;
+      box-shadow: -4px 0 20px rgba(0,0,0,0.15);
+      z-index: 200;
+      transition: right 0.35s ease;
+      display: flex;
+      flex-direction: column;
+      border-left: 2px solid #cbd5e0;
+    }
+
+    .notebook-drawer.open {
+      right: 0;
+    }
+
+    .drawer-header {
+      padding: 18px 20px;
+      border-bottom: 1px solid #e2e8f0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: #ebf8ff;
+    }
+
+    .drawer-title {
+      font-size: 1.15rem;
+      font-weight: 800;
+      color: #2b6cb0;
+    }
+
+    .drawer-content {
+      flex: 1;
+      padding: 20px;
+      overflow-y: auto;
+    }
+
+    .saved-note-item {
+      background: #f7fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 8px;
+      padding: 12px;
+      margin-bottom: 12px;
+      position: relative;
+    }
+
+    .saved-note-time {
+      font-size: 0.75rem;
+      color: #a0aec0;
+      margin-bottom: 4px;
+    }
+
+    .saved-note-text {
+      font-size: 0.9rem;
+      color: #2d3748;
+      white-space: pre-wrap;
+    }
+
+    /* Word Popover */
+    .word-modal {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: #ffffff;
+      border: 2px solid #2b6cb0;
+      border-radius: 16px;
+      padding: 24px 28px;
+      width: 90%;
+      max-width: 440px;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.25);
+      z-index: 300;
+      display: none;
+    }
+
+    .word-modal.show {
+      display: block;
+    }
+
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.4);
+      z-index: 250;
+      display: none;
+    }
+
+    .modal-overlay.show {
+      display: block;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Navigation & Annotation Toolbar -->
+  <header class="ebook-topbar">
+    <div class="book-meta">
+      <span class="book-badge">康軒國中英語 1上</span>
+      <h1 class="book-title">Unit 3: Where Is It? • 智慧電子書</h1>
+    </div>
+
+    <div class="toolbar-actions">
+      <!-- Highlighter Tool -->
+      <div class="tool-group" title="螢光筆工具：點選顏色後在課文中標記">
+        <span style="font-size:0.82rem; font-weight:700; color:#718096;">🖍️ 螢光筆:</span>
+        <span class="color-dot active" style="background:#fef08a;" onclick="selectHLColor('hl-yellow', this)"></span>
+        <span class="color-dot" style="background:#bbf7d0;" onclick="selectHLColor('hl-green', this)"></span>
+        <span class="color-dot" style="background:#fbcfe8;" onclick="selectHLColor('hl-pink', this)"></span>
+        <span class="color-dot" style="background:#bfdbfe;" onclick="selectHLColor('hl-blue', this)"></span>
+      </div>
+
+      <!-- Add Sticky Note Button -->
+      <button class="tool-btn" onclick="addStickyNote()">
+        📝 新增隨頁便利貼
+      </button>
+
+      <!-- Toggle Chinese Translation -->
+      <button class="tool-btn" id="btnToggleTrans" onclick="toggleTranslation()">
+        🌐 顯示中譯
+      </button>
+
+      <!-- Audio TTS Read Aloud -->
+      <button class="tool-btn" id="btnTTS" onclick="toggleReadAloud()">
+        🔊 全文朗讀
+      </button>
+
+      <!-- Open My Notebook Drawer -->
+      <button class="tool-btn" style="background:#2b6cb0; color:#fff;" onclick="toggleNotebook()">
+        📓 我的課堂筆記 (<span id="noteCountBadge">0</span>)
+      </button>
+    </div>
+  </header>
+
+  <!-- Chapter Tabs -->
+  <nav class="chapter-nav">
+    <button class="chapter-tab active" onclick="switchPage('dialogue', this)">
+      💬 Dialogue 對話篇
+    </button>
+    <button class="chapter-tab" onclick="switchPage('reading', this)">
+      📖 Reading 閱讀篇 (Harry's Room)
+    </button>
+    <button class="chapter-tab" onclick="switchPage('visualizer', this)">
+      🎮 方位互動遊戲 (Prepositions)
+    </button>
+    <button class="chapter-tab" onclick="switchPage('vocab', this)">
+      🔤 Word Bank 核心單字庫
+    </button>
+    <button class="chapter-tab" onclick="switchPage('grammar', this)">
+      📐 Grammar Focus 文法聚焦
+    </button>
+    <button class="chapter-tab" onclick="switchPage('quiz', this)">
+      ✍️ 隨堂實戰測驗
+    </button>
+  </nav>
+
+  <!-- Main E-Book Container -->
+  <main class="book-container">
+
+    <!-- PAGE 1: DIALOGUE -->
+    <section class="book-page" id="page-dialogue">
+      <div class="page-header">
+        <div>
+          <span class="unit-tag">Unit 3 • Dialogue</span>
+          <h2 class="page-title">Where Is My Smartphone?</h2>
+        </div>
+        <div class="page-num">P. 44 - 45</div>
+      </div>
+
+      <div class="dialogue-wrapper">
+        <!-- Dialogue 1 -->
+        <div class="dialogue-bubble">
+          <div class="speaker-avatar bella">B</div>
+          <div class="bubble-content">
+            <div class="bubble-speaker">Bella</div>
+            <div class="bubble-en">Nick, <span class="vocab-term" onclick="lookupWord('where')">where</span> is my <span class="vocab-term" onclick="lookupWord('smartphone')">smartphone</span>?</div>
+            <div class="bubble-zh">尼克，我的智慧型手機在哪裡？</div>
+          </div>
+        </div>
+
+        <div class="dialogue-bubble">
+          <div class="speaker-avatar nick">N</div>
+          <div class="bubble-content">
+            <div class="bubble-speaker">Nick</div>
+            <div class="bubble-en">Is it <span class="grammar-pill" onclick="explainGrammar('behind')">behind</span> the <span class="vocab-term" onclick="lookupWord('TV')">TV</span>?</div>
+            <div class="bubble-zh">它在電視後面嗎？</div>
+          </div>
+        </div>
+
+        <div class="dialogue-bubble">
+          <div class="speaker-avatar bella">B</div>
+          <div class="bubble-content">
+            <div class="bubble-speaker">Bella</div>
+            <div class="bubble-en">No, it isn't.</div>
+            <div class="bubble-zh">不，它不在電視後面。</div>
+          </div>
+        </div>
+
+        <div class="dialogue-bubble">
+          <div class="speaker-avatar nick">N</div>
+          <div class="bubble-content">
+            <div class="bubble-speaker">Nick</div>
+            <div class="bubble-en">Is it <span class="grammar-pill" onclick="explainGrammar('in front of')">in front of</span> the TV?</div>
+            <div class="bubble-zh">那它在電視前面嗎？</div>
+          </div>
+        </div>
+
+        <div class="dialogue-bubble">
+          <div class="speaker-avatar bella">B</div>
+          <div class="bubble-content">
+            <div class="bubble-speaker">Bella</div>
+            <div class="bubble-en">No, it isn't here.</div>
+            <div class="bubble-zh">不，它不在這裡。</div>
+          </div>
+        </div>
+
+        <div class="dialogue-bubble">
+          <div class="speaker-avatar nick">N</div>
+          <div class="bubble-content">
+            <div class="bubble-speaker">Nick</div>
+            <div class="bubble-en">Look! It's <span class="grammar-pill" onclick="explainGrammar('between')">between</span> the books and the <span class="vocab-term" onclick="lookupWord('newspaper')">newspaper</span> on the <span class="vocab-term" onclick="lookupWord('table')">table</span>.</div>
+            <div class="bubble-zh">你看！它在桌上的書本和報紙中間！</div>
+          </div>
+        </div>
+
+        <div class="dialogue-bubble">
+          <div class="speaker-avatar bella">B</div>
+          <div class="bubble-content">
+            <div class="bubble-speaker">Bella</div>
+            <div class="bubble-en">Oh, yes! Thank you, Nick. You are so nice.</div>
+            <div class="bubble-zh">喔對耶！謝謝你，尼克。你人真好。</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PAGE 2: READING -->
+    <section class="book-page" id="page-reading" style="display:none;">
+      <div class="page-header">
+        <div>
+          <span class="unit-tag">Unit 3 • Reading</span>
+          <h2 class="page-title">Harry's Bedroom & RoomGPT</h2>
+        </div>
+        <div class="page-num">P. 46 - 47</div>
+      </div>
+
+      <div class="reading-card">
+        <p class="reading-para">
+          Five minutes later, Bella and Nick are in the <span class="vocab-term" onclick="lookupWord('living room')">living room</span>. Bella is looking at some photos on her tablet.
+        </p>
+        <div class="reading-trans">五分鐘後，貝拉與尼克在客廳裡。貝拉正在平板上看幾張照片。</div>
+
+        <p class="reading-para">
+          "Nick, look at this <span class="vocab-term" onclick="lookupWord('photo')">photo</span>," says Bella. "This is Harry's <span class="vocab-term" onclick="lookupWord('bedroom')">bedroom</span> in his aunt and uncle's <span class="vocab-term" onclick="lookupWord('house')">house</span>. It's <span class="grammar-pill" onclick="explainGrammar('under')">under</span> the <span class="vocab-term" onclick="lookupWord('stairs')">stairs</span>."
+        </p>
+        <div class="reading-trans">「尼克，看這張照片，」貝拉說。「這是哈利在他阿姨和姨丈家的臥室。它在樓梯下面。」</div>
+
+        <p class="reading-para">
+          "Wow, it's very <span class="vocab-term" onclick="lookupWord('small')">small</span>," Nick says. "Where is his bed?"
+        </p>
+        <div class="reading-trans">「哇，它好小喔，」尼克說。「他的床在哪裡？」</div>
+
+        <p class="reading-para">
+          "His <span class="vocab-term" onclick="lookupWord('bed')">bed</span> is <span class="grammar-pill" onclick="explainGrammar('next to')">next to</span> the wall," answers Bella. "And look at this <span class="vocab-term" onclick="lookupWord('different')">different</span> picture! In the <span class="vocab-term" onclick="lookupWord('magic')">magic</span> school, Harry and Ron are <span class="vocab-term" onclick="lookupWord('roommates')">roommates</span>. Harry's bed is <span class="grammar-pill" onclick="explainGrammar('beside')">beside</span> Ron's bed."
+        </p>
+        <div class="reading-trans">「他的床在牆壁旁邊，」貝拉回答。「再看這張不同的照片！在魔法學校裡，哈利和榮恩是室友。哈利的床在榮恩的床旁邊。」</div>
+
+        <p class="reading-para">
+          Nick smiles, "Let's get some cool room ideas from <span style="font-weight:700; color:#2b6cb0;">RoomGPT</span> for our new study room, too!"
+        </p>
+        <div class="reading-trans">尼克微笑著說：「我們也用 RoomGPT 來為我們的新書房找些酷炫的佈置靈感吧！」</div>
+      </div>
+    </section>
+
+    <!-- PAGE 3: PREPOSITION VISUALIZER -->
+    <section class="book-page" id="page-visualizer" style="display:none;">
+      <div class="page-header">
+        <div>
+          <span class="unit-tag">Interactive Workshop</span>
+          <h2 class="page-title">方位介系詞實境定位模擬器</h2>
+        </div>
+        <div class="page-num">P. 48</div>
+      </div>
+
+      <div class="visualizer-section">
+        <p style="font-size:0.95rem; color:#4a5568; margin-bottom:14px; text-align:center;">
+          點選下方方位介系詞，觀察「智慧型手機 (Smartphone)」相對於「桌子 (Table)」的位置變化：
+        </p>
+
+        <div class="room-canvas">
+          <div class="room-furniture" id="roomTable">TABLE 桌子</div>
+          <div class="room-target-obj" id="targetPhone">📱 Smartphone</div>
+        </div>
+
+        <div class="prep-buttons">
+          <button class="prep-btn active" onclick="setObjPosition('on', this)">on (在...上方)</button>
+          <button class="prep-btn" onclick="setObjPosition('under', this)">under (在...下方)</button>
+          <button class="prep-btn" onclick="setObjPosition('in front of', this)">in front of (在...前方)</button>
+          <button class="prep-btn" onclick="setObjPosition('behind', this)">behind (在...後方)</button>
+          <button class="prep-btn" onclick="setObjPosition('next to', this)">next to (在...旁邊)</button>
+          <button class="prep-btn" onclick="setObjPosition('between', this)">between (在...中間)</button>
+        </div>
+
+        <div class="sentence-display" id="sentenceOutput">
+          The smartphone is <span style="text-decoration:underline; color:#d69e2e;">on</span> the table.
+        </div>
+      </div>
+    </section>
+
+    <!-- PAGE 4: VOCABULARY BANK -->
+    <section class="book-page" id="page-vocab" style="display:none;">
+      <div class="page-header">
+        <div>
+          <span class="unit-tag">Word Bank</span>
+          <h2 class="page-title">Unit 3 核心單字與片語</h2>
+        </div>
+        <div class="page-num">P. 49</div>
+      </div>
+
+      <div class="vocab-grid" id="vocabContainer">
+        <!-- Rendered by JS -->
+      </div>
+    </section>
+
+    <!-- PAGE 5: GRAMMAR FOCUS -->
+    <section class="book-page" id="page-grammar" style="display:none;">
+      <div class="page-header">
+        <div>
+          <span class="unit-tag">Grammar Focus</span>
+          <h2 class="page-title">文法焦點：Where 問句與地方介系詞</h2>
+        </div>
+        <div class="page-num">P. 50</div>
+      </div>
+
+      <div style="display:flex; flex-direction:column; gap:24px;">
+        <div style="background:#fff; border:1px solid #e2e8f0; border-radius:12px; padding:24px; box-shadow:0 4px 10px rgba(0,0,0,0.04);">
+          <h3 style="font-size:1.3rem; color:#2b6cb0; margin-bottom:12px;">📌 句型一：Where 問句（詢問位置）</h3>
+          <p style="margin-bottom:12px;"><strong>問句結構：</strong> <code style="background:#edf2f7; padding:2px 8px; border-radius:4px;">Where + is / are + 主詞?</code></p>
+          <p style="margin-bottom:12px;"><strong>答句結構：</strong> <code style="background:#edf2f7; padding:2px 8px; border-radius:4px;">It is / They are + [地方介系詞片語].</code></p>
+          <ul style="padding-left:24px; color:#4a5568;">
+            <li><strong>Where is</strong> the cat? &rarr; <strong>It is</strong> under the chair. (單數用 is / It is)</li>
+            <li><strong>Where are</strong> the books? &rarr; <strong>They are</strong> on the desk. (複數用 are / They are)</li>
+          </ul>
+        </div>
+
+        <div style="background:#fff; border:1px solid #e2e8f0; border-radius:12px; padding:24px; box-shadow:0 4px 10px rgba(0,0,0,0.04);">
+          <h3 style="font-size:1.3rem; color:#2b6cb0; margin-bottom:12px;">📌 句型二：7 大常用地方介系詞辨析</h3>
+          <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(200px, 1fr)); gap:14px; margin-top:14px;">
+            <div style="background:#f7fafc; padding:12px; border-radius:8px; border-left:4px solid #3182ce;">
+              <strong>in</strong> (在...裡面)<br><span style="font-size:0.85rem; color:#718096;">in the bedroom / in the box</span>
+            </div>
+            <div style="background:#f7fafc; padding:12px; border-radius:8px; border-left:4px solid #38a169;">
+              <strong>on</strong> (在...表面上)<br><span style="font-size:0.85rem; color:#718096;">on the table / on the wall</span>
+            </div>
+            <div style="background:#f7fafc; padding:12px; border-radius:8px; border-left:4px solid #d69e2e;">
+              <strong>under</strong> (在...正下方)<br><span style="font-size:0.85rem; color:#718096;">under the stairs / under the bed</span>
+            </div>
+            <div style="background:#f7fafc; padding:12px; border-radius:8px; border-left:4px solid #e53e3e;">
+              <strong>behind</strong> (在...後方)<br><span style="font-size:0.85rem; color:#718096;">behind the door / behind the TV</span>
+            </div>
+            <div style="background:#f7fafc; padding:12px; border-radius:8px; border-left:4px solid #805ad5;">
+              <strong>in front of</strong> (在...前方)<br><span style="font-size:0.85rem; color:#718096;">in front of the sofa</span>
+            </div>
+            <div style="background:#f7fafc; padding:12px; border-radius:8px; border-left:4px solid #dd6b20;">
+              <strong>next to / beside</strong> (在...旁邊)<br><span style="font-size:0.85rem; color:#718096;">next to Ron's bed</span>
+            </div>
+            <div style="background:#f7fafc; padding:12px; border-radius:8px; border-left:4px solid #319795;">
+              <strong>between... and...</strong> (在兩者之間)<br><span style="font-size:0.85rem; color:#718096;">between the books and the pen</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PAGE 6: INTERACTIVE QUIZ -->
+    <section class="book-page" id="page-quiz" style="display:none;">
+      <div class="page-header">
+        <div>
+          <span class="unit-tag">Check Your Skills</span>
+          <h2 class="page-title">Unit 3 實戰隨堂測驗</h2>
+        </div>
+        <div class="page-num">P. 51</div>
+      </div>
+
+      <div id="quizContainer" style="display:flex; flex-direction:column; gap:20px;">
+        <!-- Rendered by JS -->
+      </div>
+      <button onclick="submitQuiz()" style="margin-top:24px; padding:12px 28px; background:#2b6cb0; color:#fff; border:none; border-radius:24px; font-weight:800; font-size:1rem; cursor:pointer;">
+        送出測驗並查看詳解 💯
+      </button>
+      <div id="quizScoreResult" style="margin-top:16px; font-size:1.15rem; font-weight:800; color:#2c5282;"></div>
+    </section>
+
+  </main>
+
+  <!-- Notebook Drawer (Side Panel) -->
+  <aside class="notebook-drawer" id="notebookDrawer">
+    <div class="drawer-header">
+      <h3 class="drawer-title">📓 我的隨堂筆記清單</h3>
+      <button style="border:none; background:transparent; font-size:1.3rem; cursor:pointer;" onclick="toggleNotebook()">✕</button>
+    </div>
+    <div class="drawer-content" id="drawerContent">
+      <p style="color:#a0aec0; text-align:center; margin-top:20px;">尚無筆記，點擊上方「新增隨頁便利貼」來記錄重點！</p>
+    </div>
+  </aside>
+
+  <!-- Word Lookup Popover Modal -->
+  <div class="modal-overlay" id="modalOverlay" onclick="closeWordModal()"></div>
+  <div class="word-modal" id="wordModal">
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+      <h3 style="font-size:1.5rem; color:#2b6cb0;" id="wmWord">Word</h3>
+      <button style="border:none; background:transparent; font-size:1.2rem; cursor:pointer;" onclick="closeWordModal()">✕</button>
+    </div>
+    <div style="color:#718096; font-size:0.95rem; margin-bottom:6px;" id="wmKK">/wɜːd/</div>
+    <div style="font-size:1.1rem; font-weight:700; color:#2d3748; margin-bottom:12px;" id="wmDef">中文釋義</div>
+    <div style="font-size:0.95rem; color:#4a5568; background:#f7fafc; padding:10px 14px; border-radius:8px; border-left:4px solid #2b6cb0; margin-bottom:16px;" id="wmEx">
+      Example sentence here.
+    </div>
+    <button onclick="speakCurrentWord()" style="padding:8px 18px; background:#ebf8ff; border:1px solid #bee3f8; border-radius:20px; color:#2b6cb0; font-weight:700; cursor:pointer; display:flex; align-items:center; gap:6px;">
+      🔊 點擊發音 (Pronounce)
+    </button>
+  </div>
+
+  <script>
+    // Vocabulary Data
+    const vocabData = {
+      "where": { kk: "[hwɛr]", def: "adv. 在哪裡", ex: "Where is my English workbook?" },
+      "smartphone": { kk: "[ˈsmɑrtˌfoʊn]", def: "n. 智慧型手機", ex: "Her new smartphone is very cool." },
+      "TV": { kk: "[ˌtiːˈviː]", def: "n. 電視機 (television)", ex: "Don't watch TV all day." },
+      "newspaper": { kk: "[ˈnuzˌpeɪpər]", def: "n. 報紙", ex: "My grandfather reads the newspaper every morning." },
+      "table": { kk: "[ˈteɪbl]", def: "n. 桌子（多指餐桌）", ex: "The cake is on the dining table." },
+      "desk": { kk: "[dɛsk]", def: "n. 書桌 / 辦公桌", ex: "My computer is on the desk." },
+      "living room": { kk: "[ˈlɪvɪŋ rum]", def: "n. 客廳", ex: "We talk and watch TV in the living room." },
+      "bedroom": { kk: "[ˈbɛdˌrum]", def: "n. 臥室", ex: "Harry's bedroom is under the stairs." },
+      "house": { kk: "[haʊs]", def: "n. 房子 / 房屋", ex: "This is a big and beautiful house." },
+      "stairs": { kk: "[stɛrz]", def: "n. 樓梯 (常用複數)", ex: "The cat is running down the stairs." },
+      "small": { kk: "[smɔl]", def: "adj. 小的", ex: "The room is small but clean." },
+      "bed": { kk: "[bɛd]", def: "n. 床鋪", ex: "It is time to go to bed." },
+      "different": { kk: "[ˈdɪfərənt]", def: "adj. 不同的", ex: "They have different hobbies." },
+      "magic": { kk: "[ˈmædʒɪk]", def: "adj./n. 魔法的；魔術", ex: "Hogwarts is a famous magic school." },
+      "roommates": { kk: "[ˈrumˌmeɪts]", def: "n. 室友 (複數)", ex: "Harry and Ron are good roommates." },
+      "photo": { kk: "[ˈfoʊtoʊ]", def: "n. 相片 / 照片", ex: "Look at this family photo." }
+    };
+
+    // Quiz Data
+    const quizQuestions = [
+      {
+        q: "1. — ________ is the dog? — It's under the table.",
+        options: ["Who", "Where", "How", "What"],
+        ans: 1,
+        exp: "詢問「位置在哪裡」需使用疑問副詞 Where。"
+      },
+      {
+        q: "2. The smartphone is between the books ________ the newspaper.",
+        options: ["with", "or", "and", "in"],
+        ans: 2,
+        exp: "固定介系詞片語：between A and B (在 A 與 B 之間)。"
+      },
+      {
+        q: "3. In Harry's aunt's house, his bedroom is ________ the stairs.",
+        options: ["on", "under", "between", "next"],
+        ans: 1,
+        exp: "根據課文內容，哈利在阿姨家的房間是在樓梯下方 (under the stairs)。"
+      },
+      {
+        q: "4. — Are the pencils on the desk? — ________",
+        options: ["Yes, it is.", "No, it isn't.", "Yes, they are.", "No, they are."],
+        ans: 2,
+        exp: "主詞 the pencils 為複數，答句代名詞須用 they，肯定回答為 Yes, they are。"
+      }
+    ];
+
+    // Page Switching
+    function switchPage(pageKey, btn) {
+      document.querySelectorAll(".book-page").forEach(p => p.style.display = "none");
+      document.getElementById(`page-${pageKey}`).style.display = "block";
+      document.querySelectorAll(".chapter-tab").forEach(t => t.classList.remove("active"));
+      if (btn) btn.classList.add("active");
+    }
+
+    // Toggle Translation
+    let showTrans = false;
+    function toggleTranslation() {
+      showTrans = !showTrans;
+      document.querySelectorAll(".bubble-zh, .reading-trans").forEach(el => {
+        el.classList.toggle("show", showTrans);
+      });
+      document.getElementById("btnToggleTrans").textContent = showTrans ? "🙈 隱藏中譯" : "🌐 顯示中譯";
+    }
+
+    // Highlighter Tool
+    let currentHLClass = "hl-yellow";
+    function selectHLColor(cls, el) {
+      currentHLClass = cls;
+      document.querySelectorAll(".color-dot").forEach(d => d.classList.remove("active"));
+      el.classList.add("active");
+    }
+
+    // Add Highlight on Selection
+    document.addEventListener("mouseup", () => {
+      const selection = window.getSelection();
+      if (!selection.isCollapsed) {
+        const text = selection.toString().trim();
+        if (text.length > 0 && text.length < 50) {
+          // If clicked inside book page, offer auto-highlight
+          const range = selection.getRangeAt(0);
+          const span = document.createElement("span");
+          span.className = currentHLClass;
+          span.textContent = text;
+          range.deleteContents();
+          range.insertNode(span);
+          selection.removeAllRanges();
+          saveNote(`🖍️ 標記重點: "${text}"`);
+        }
+      }
+    });
+
+    // Word Lookup Modal
+    let activeWord = "";
+    function lookupWord(w) {
+      const data = vocabData[w.toLowerCase()];
+      if (!data) return;
+      activeWord = w;
+      document.getElementById("wmWord").textContent = w;
+      document.getElementById("wmKK").textContent = data.kk;
+      document.getElementById("wmDef").textContent = data.def;
+      document.getElementById("wmEx").textContent = data.ex;
+      document.getElementById("wordModal").classList.add("show");
+      document.getElementById("modalOverlay").classList.add("show");
+      speakWord(w);
+    }
+
+    function closeWordModal() {
+      document.getElementById("wordModal").classList.remove("show");
+      document.getElementById("modalOverlay").classList.remove("show");
+    }
+
+    function speakWord(text) {
+      if ('speechSynthesis' in window) {
+        window.speechSynthesis.cancel();
+        const utter = new SpeechSynthesisUtterance(text);
+        utter.lang = "en-US";
+        utter.rate = 0.9;
+        window.speechSynthesis.speak(utter);
+      }
+    }
+
+    function speakCurrentWord() {
+      if (activeWord) speakWord(activeWord);
+    }
+
+    // Grammar Explanation Alert
+    function explainGrammar(prep) {
+      const explanations = {
+        "behind": "【behind】在...之後：常用於後方，例：behind the TV (在電視機後面)。",
+        "in front of": "【in front of】在...前面：注意與 in the front of (在內部的前面) 不同。",
+        "between": "【between ... and ...】在兩者之間：例如 between the books and the newspaper。",
+        "under": "【under】在...正下方：例如 under the stairs (樓梯底下)、under the bed (床底下)。",
+        "next to": "【next to】在...旁邊：相當於 beside，表示緊鄰兩者。",
+        "beside": "【beside】在...旁邊：等同於 next to。"
+      };
+      alert(explanations[prep] || `${prep} 地方介系詞用法`);
+      saveNote(`📐 文法註記: ${prep}`);
+    }
+
+    // TTS Read Aloud
+    let isReading = false;
+    function toggleReadAloud() {
+      if (!('speechSynthesis' in window)) {
+        alert("抱歉，您的瀏覽器不支援語音朗讀功能。");
+        return;
+      }
+      if (isReading) {
+        window.speechSynthesis.cancel();
+        isReading = false;
+        document.getElementById("btnTTS").textContent = "🔊 全文朗讀";
+      } else {
+        const textToRead = "Bella: Nick, where is my smartphone? Nick: Is it behind the TV? Bella: No, it isn't. Nick: Is it in front of the TV? Bella: No, it isn't here. Nick: Look! It's between the books and the newspaper on the table. Bella: Oh, yes! Thank you, Nick.";
+        const utter = new SpeechSynthesisUtterance(textToRead);
+        utter.lang = "en-US";
+        utter.rate = 0.85;
+        utter.onend = () => {
+          isReading = false;
+          document.getElementById("btnTTS").textContent = "🔊 全文朗讀";
+        };
+        window.speechSynthesis.speak(utter);
+        isReading = true;
+        document.getElementById("btnTTS").textContent = "⏹️ 停止朗讀";
+      }
+    }
+
+    // Preposition Visualizer Mini-Game
+    function setObjPosition(prep, btn) {
+      document.querySelectorAll(".prep-btn").forEach(b => b.classList.remove("active"));
+      btn.classList.add("active");
+
+      const phone = document.getElementById("targetPhone");
+      const out = document.getElementById("sentenceOutput");
+
+      if (prep === 'on') {
+        phone.style.transform = "translate(0, -60px)";
+        out.innerHTML = 'The smartphone is <span style="text-decoration:underline; color:#d69e2e;">on</span> the table.';
+      } else if (prep === 'under') {
+        phone.style.transform = "translate(0, 60px)";
+        out.innerHTML = 'The smartphone is <span style="text-decoration:underline; color:#d69e2e;">under</span> the table.';
+      } else if (prep === 'in front of') {
+        phone.style.transform = "translate(0, 30px) scale(1.15)";
+        out.innerHTML = 'The smartphone is <span style="text-decoration:underline; color:#d69e2e;">in front of</span> the table.';
+      } else if (prep === 'behind') {
+        phone.style.transform = "translate(0, -35px) scale(0.85)";
+        out.innerHTML = 'The smartphone is <span style="text-decoration:underline; color:#d69e2e;">behind</span> the table.';
+      } else if (prep === 'next to') {
+        phone.style.transform = "translate(120px, 0)";
+        out.innerHTML = 'The smartphone is <span style="text-decoration:underline; color:#d69e2e;">next to</span> the table.';
+      } else if (prep === 'between') {
+        phone.style.transform = "translate(-120px, 0)";
+        out.innerHTML = 'The smartphone is <span style="text-decoration:underline; color:#d69e2e;">between</span> the books and the table.';
+      }
+      speakWord(out.textContent);
+    }
+
+    // Sticky Notes Drag & Drop
+    let noteIdCounter = 0;
+    function addStickyNote(content = "") {
+      noteIdCounter++;
+      const note = document.createElement("div");
+      note.className = "sticky-note";
+      note.id = `note-${noteIdCounter}`;
+      note.style.top = `${100 + (noteIdCounter * 30) % 200}px`;
+      note.style.left = `${50 + (noteIdCounter * 40) % 300}px`;
+
+      note.innerHTML = `
+        <div class="sticky-note-header">
+          <span>便簽 #${noteIdCounter}</span>
+          <span class="sticky-close" onclick="removeSticky('${note.id}')">✕</span>
+        </div>
+        <textarea placeholder="點此輸入上課註記..." oninput="syncNotes()">${content}</textarea>
+      `;
+
+      makeDraggable(note);
+      document.querySelector(".book-container").appendChild(note);
+      syncNotes();
+    }
+
+    function removeSticky(id) {
+      const el = document.getElementById(id);
+      if (el) el.remove();
+      syncNotes();
+    }
+
+    function makeDraggable(el) {
+      let pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
+      const header = el.querySelector(".sticky-note-header");
+      header.onmousedown = dragMouseDown;
+
+      function dragMouseDown(e) {
+        e.preventDefault();
+        pos3 = e.clientX;
+        pos4 = e.clientY;
+        document.onmouseup = closeDragElement;
+        document.onmousemove = elementDrag;
+      }
+
+      function elementDrag(e) {
+        e.preventDefault();
+        pos1 = pos3 - e.clientX;
+        pos2 = pos4 - e.clientY;
+        pos3 = e.clientX;
+        pos4 = e.clientY;
+        el.style.top = (el.offsetTop - pos2) + "px";
+        el.style.left = (el.offsetLeft - pos1) + "px";
+      }
+
+      function closeDragElement() {
+        document.onmouseup = null;
+        document.onmousemove = null;
+      }
+    }
+
+    // Notebook Side Drawer Management
+    let noteStore = [];
+    function saveNote(text) {
+      noteStore.push({ time: new Date().toLocaleTimeString(), text });
+      updateNotebookUI();
+    }
+
+    function syncNotes() {
+      const texts = [];
+      document.querySelectorAll(".sticky-note textarea").forEach(ta => {
+        if (ta.value.trim()) texts.push({ time: "便利貼", text: ta.value.trim() });
+      });
+      noteStore = [...noteStore.filter(n => !n.time.includes("便利貼")), ...texts];
+      updateNotebookUI();
+    }
+
+    function updateNotebookUI() {
+      const content = document.getElementById("drawerContent");
+      const badge = document.getElementById("noteCountBadge");
+      badge.textContent = noteStore.length;
+
+      if (noteStore.length === 0) {
+        content.innerHTML = '<p style="color:#a0aec0; text-align:center; margin-top:20px;">尚無筆記，點擊上方「新增隨頁便利貼」來記錄重點！</p>';
+        return;
+      }
+
+      content.innerHTML = noteStore.map(n => `
+        <div class="saved-note-item">
+          <div class="saved-note-time">${n.time}</div>
+          <div class="saved-note-text">${n.text}</div>
+        </div>
+      `).join('');
+    }
+
+    function toggleNotebook() {
+      document.getElementById("notebookDrawer").classList.toggle("open");
+    }
+
+    // Render Vocabulary Cards
+    function renderVocabGrid() {
+      const container = document.getElementById("vocabContainer");
+      container.innerHTML = Object.keys(vocabData).map(k => {
+        const item = vocabData[k];
+        return `
+          <div class="vocab-card" onclick="lookupWord('${k}')">
+            <div class="vocab-word">
+              <span>${k}</span>
+              <span class="vocab-kk">${item.kk}</span>
+            </div>
+            <div class="vocab-def">${item.def}</div>
+            <div class="vocab-ex">${item.ex}</div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    // Render Quiz
+    function renderQuiz() {
+      const qContainer = document.getElementById("quizContainer");
+      qContainer.innerHTML = quizQuestions.map((q, idx) => `
+        <div style="background:#fff; border:1px solid #e2e8f0; border-radius:10px; padding:20px; box-shadow:0 2px 6px rgba(0,0,0,0.04);">
+          <div style="font-weight:700; font-size:1.05rem; margin-bottom:12px; color:#2d3748;">${q.q}</div>
+          <div style="display:flex; flex-direction:column; gap:8px;">
+            ${q.options.map((opt, optIdx) => `
+              <label style="display:flex; align-items:center; gap:8px; cursor:pointer; font-size:0.95rem; color:#4a5568;">
+                <input type="radio" name="q_${idx}" value="${optIdx}">
+                <span>(${String.fromCharCode(65 + optIdx)}) ${opt}</span>
+              </label>
+            `).join('')}
+          </div>
+          <div id="q_exp_${idx}" style="margin-top:10px; font-size:0.88rem; color:#2b6cb0; display:none; background:#ebf8ff; padding:8px 12px; border-radius:6px;"></div>
+        </div>
+      `).join('');
+    }
+
+    function submitQuiz() {
+      let score = 0;
+      quizQuestions.forEach((q, idx) => {
+        const selected = document.querySelector(`input[name="q_${idx}"]:checked`);
+        const expEl = document.getElementById(`q_exp_${idx}`);
+        expEl.style.display = "block";
+
+        if (selected && parseInt(selected.value) === q.ans) {
+          score += 25;
+          expEl.innerHTML = `✅ 答對了！解析：${q.exp}`;
+          expEl.style.color = "#2f855a";
+          expEl.style.background = "#f0fff4";
+        } else {
+          expEl.innerHTML = `❌ 正確答案是 (${String.fromCharCode(65 + q.ans)})。解析：${q.exp}`;
+          expEl.style.color = "#c53030";
+          expEl.style.background = "#fff5f5";
+        }
+      });
+
+      document.getElementById("quizScoreResult").textContent = `測驗得分：${score} / 100 分！`;
+      saveNote(`✍️ 隨堂測驗成績: ${score} 分`);
+    }
+
+    // Init
+    window.addEventListener("DOMContentLoaded", () => {
+      renderVocabGrid();
+      renderQuiz();
+      // Add default welcome note
+      addStickyNote("💡 康軒七上 Unit 3 重點：\n1. Where 問句\n2. 方位介系詞 (in, on, under, behind, in front of, between, next to)");
+    });
+  </script>
+</body>
+</html>
